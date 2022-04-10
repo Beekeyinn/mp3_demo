@@ -1,0 +1,21 @@
+<div class="d-inline-flex btn-group-sm justify-content-center float-end">
+    {% if page_obj.has_previous %}
+    <a href="?page=1{% if request.GET.query %}&query={{request.GET.query}}{% endif %}"
+       class='btn btn-sm border-primary mx-1'>&laquo; first</a>
+    <a href="?page={{page_obj.previous_page_number}}{% if request.GET.query %}&query={{request.GET.query}}{% endif %}"
+       class='btn btn-sm border-primary mx-1'><i class="fa fa-arrow-left"></i>
+        Previous</a>
+    {% endif %}
+    <li class="page-item active list-unstyled">
+        <span class="page-link ">
+            {{page_obj.number}}
+        </span>
+    </li>
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}{% if request.GET.query %}&query={{request.GET.query}}{% endif %}"
+       class='btn btn-sm border-primary mx-1'>Next <i
+           class="fa fa-arrow-right"></i></a>
+    <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.query %}&query={{request.GET.query}}{% endif %}"
+       class='btn btn-sm border-primary mx-1'>last &raquo;</a>
+    {% endif %}
+</div>

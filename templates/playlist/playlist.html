@@ -1,0 +1,13 @@
+{% extends 'includes/base.html' %}
+{% block title %}
+Playlist
+{% endblock  %}
+{% block content %}
+<div>
+    {% include 'includes/message/message.html' %}
+    <h1 class="text-info fw-bold">{{playlist.user.username}} playlist</h1>
+    {% for music in musics %}
+    {% include 'playlist/snippet/play_playlist.html' with music=music %}
+    {% endfor %}
+</div>
+{% endblock  %}

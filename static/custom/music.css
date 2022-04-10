@@ -1,0 +1,23 @@
+
+#rem_time {
+  margin-left: 0.5rem;
+}
+#end_time {
+  margin-right: 0.5rem;
+}
+.audio-control {
+  display: inline-flex;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgb(169, 240, 240);
+  border-radius: 0.7rem;
+}
+.hide {
+  display: none;
+}
+.volume {
+  margin-left: 0.5rem;
+}
+.volume:hover .hide {
+  display: inline;
+}

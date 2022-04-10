@@ -1,0 +1,85 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block title %}{{music.title|capfirst}}{% endblock  %}
+{% block content %}
+<style>
+  .music-description {
+    padding: 0.5rem;
+  }
+
+  .music-img-wrapper {
+    height: 60vh;
+  }
+
+  .music-title {
+    font-size: 16px;
+  }
+
+  .music-body {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .playbtn {
+    background-image: url("{% static 'images/play.jpg' %}");
+    background-size: cover;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+    padding-right: 0.5rem;
+  }
+
+  .playbtn.pause {
+    background-image: url("{% static 'images/pause.jpg' %}");
+  }
+
+  .progressbar {
+    width: -webkit-fill-available;
+    width: 100%;
+  }
+
+</style>
+<div class="container shadow-lg">
+  <div class="music-img-wrapper">
+    <img src="{{music.image.url}}" alt="{{music.title}}" height="100%"
+         width="100%" />
+  </div>
+  <div class="card-body">
+    <div>
+      Title:
+      <span class="music-title fw-bold">&nbsp;{{music.title|capfirst}}</span>
+      {% if request.user.is_authenticated %}
+      <form action="{% url 'playlist' %}" method="post" class="float-end">
+        {% csrf_token %}
+        {% is_in_playlist request music.id as in_playlist %}
+        <input type="hidden" name="music_id" value="{{music.id}}" />
+        <input type="submit"
+               value="{% if in_playlist %}Remove from Playlist{% else %}Add to Playlist{% endif %}"
+               class="btn btn-sm btn-outline-secondary" />
+      </form>
+      {% endif %}
+    </div>
+    <div>Genre:<span class="fw-bold"> {{music.genre}}</span></div>
+    <div>Singer:<span class="fw-bold"> {{music.singer}}</span></div>
+    <div class="music-body ">
+      <div class="audio-control w-100 d-inline-flex" id="{{music.id}}">
+        <audio id="audio-{{music.id}}" class="first" prefetch="metadata"
+               ontimeupdate="initProgressBar(this)">
+          <source src="{{music.audio.url}}" type="audio/mp3" quality="high" />
+        </audio>
+        <div id="{{ music.id }}" class="playbtn mt-1 mx-1"
+             onclick="togglePlay(this)"></div>
+        <span id="start_time" class="mx-1">00:00</span>/
+        <span id="end_time" class="mx-1">00:00</span>
+        <progress id="progressbar{{music.id}}" class="progressbar m-1" value="0"
+                  max="1"></progress>
+        <span id="rem_time" class="mx-1">00:00</span>
+        <script src="{% static 'custom/music.js' %}"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}

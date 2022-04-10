@@ -1,0 +1,15 @@
+a {
+  text-decoration: none !important;
+}
+html,
+body {
+  height: 100%;
+}
+
+.full {
+  min-height: 95vh;
+}
+.asteriskField {
+  color: red;
+  margin-left: 0.1rem;
+}
